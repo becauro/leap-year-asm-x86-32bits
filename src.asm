@@ -1,16 +1,19 @@
-
+bits 64
 
 section .data
 
+ %if 0
     isLeap db "leap year!"
     tamIsLeap EQU $-isLeap
 
     notLeap db "not a leap year!"
     tamNotLeap EQU $-notLeap
 
+ %endif
+
     tamYear EQU 4
 
-; %if 0
+
 
 section .bss
     year resb tamYear
@@ -27,7 +30,8 @@ _start:
 	mov rdi, 0
 	mov rsi, year
 	mov rdx, tamYear
-
+	syscall
+%if 0
 	mov rbx, 0
 	mov rbx, 4
 	div rbx
@@ -66,7 +70,7 @@ _start:
 	syscall
 
 
-
+%endif
 
 
 
