@@ -2,23 +2,17 @@ bits 64
 
 section .data
 
- %if 0
     isLeap db "leap year!"
     tamIsLeap EQU $-isLeap
 
     notLeap db "not a leap year!"
     tamNotLeap EQU $-notLeap
 
- %endif
-
     tamYear EQU 4
-
-
 
 section .bss
     year resb tamYear
 
-; %endif
 
 section .text
 
@@ -31,18 +25,19 @@ _start:
 	mov rsi, year
 	mov rdx, tamYear
 	syscall
-%if 0
+; %if 0
 	mov rbx, 0
 	mov rbx, 4
 	div rbx
 	cmp rdx, 0
-	jne .end
+	jne .not_leap
 	mov rbx, 0
 	mov rbx, 100
 	div rbx
 	cmp rdx, 0
 	je .div_400
-	ret
+	jmp .end ; ADDED
+	; ret
 
 	.div_400:
 
@@ -50,7 +45,8 @@ _start:
 	div rbx
 	cmp rdx, 0
 	jne .not_leap
-	ret
+	jmp .end ; ADDED
+	;ret
 
 	.end:
 
@@ -70,7 +66,7 @@ _start:
 	syscall
 
 
-%endif
+;%endif
 
 
 
