@@ -2,36 +2,42 @@ bits 64
 
 section .data
 
-    isLeap db "leap year!"
+    isLeap db "leap year!", 0xa, 0xd
     tamIsLeap EQU $-isLeap
 
-    notLeap db "not a leap year!"
+    notLeap db "not a leap year!", 0xa, 0xd
     tamNotLeap EQU $-notLeap
-
-    tamYear EQU 4
+    ;tamYear EQU 4
 
 section .bss
-    year resb tamYear
-
+    year resd 1 
 
 section .text
 
 
 global _start 
-_start:
 
+	_start:
 	mov rax, 0
 	mov rdi, 0
-	mov rsi, year
-	mov rdx, tamYear
+	lea rsi, [year]
+	mov rdx, tamYear 
+ 
 	syscall
+
 ; %if 0
-	mov rbx, 0
+	;mov eax, [year] ; ADDED
+	mov eax, rsi ; ADDED
+	xor rdx, rdx
+	xor rbx, rbx
+
+	sub rax, '0'
+	sub rbx, '0'
 	mov rbx, 4
 	div rbx
 	cmp rdx, 0
 	jne .not_leap
-	mov rbx, 0
+	xor rbx, rbx
 	mov rbx, 100
 	div rbx
 	cmp rdx, 0
@@ -55,7 +61,7 @@ _start:
 	mov rsi, isLeap
 	mov rdx, tamIsLeap
 	syscall
-
+	jmp .exit
 
 	.not_leap:
 
@@ -65,6 +71,12 @@ _start:
 	mov rdx, tamNotLeap
 	syscall
 
+;%if 0
+       .exit:
+      
+              mov rax, 0x3c
+              mov rdi, 0
+              syscall
 
 ;%endif
 
