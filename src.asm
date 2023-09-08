@@ -25,56 +25,62 @@ global _start
 
 
 
-convert: 
+convert:   ; convert from ASCII
 
 xor eax, eax
 
 xor edx, edx
-sub byte [year], '0'
+sub byte [year], '0'      ; remove 0x30 ascii code of the FIRST part of the year 
 mov dl, [year]
-imul dx, 1000 
+imul dx, 1000             ; convert the FIRST part of the year 
 add eax, edx 
 
 xor edx, edx
-sub byte [year+1], '0'
+sub byte [year+1], '0'     ; remove 0x30 ascii code of the SECOND part of the year  
 mov dl, [year+1]
-imul dx, 100 
+imul dx, 100               ; convert the SECOND part of the year 
 add eax, edx 
 
 xor edx, edx
-sub byte [year + 2], '0'
+sub byte [year + 2], '0'  ; remove 0x30 ascii code of the THIRD part of the year  
 mov dl, [year+2]
-imul dx, 10 
+imul dx, 10		  ; convert the THIRD part of the year  
 add eax, edx 
 
 xor edx, edx
-sub byte [year + 3], '0'
+sub byte [year + 3], '0'  ; remove 0x30 ascii code of the FOURTH part of the year  
 mov dl, [year+3]
 add eax, edx 
 
 jmp calc
 
 calc:
+	xor ecx, ecx
 	xor edx, edx
 	xor ebx, ebx 
+	mov ecx, eax ; copy the original input year to use later
 	mov ebx , 4
 	div ebx
 	cmp edx, 0
 	jne .not_leap
 	xor esi, esi
+	xor eax, eax
+	mov eax, ecx   	; get back the original input here 
 	mov esi, 100
 	div esi
 	cmp edx, 0
 	je .div_400
-	jmp .end ; ADDED
+	jmp .end ; 
 
 	.div_400:
-	xor esi, esi ; ADDED
+	xor esi, esi ; 
+	xor eax, eax
+	mov eax, ecx 	; get back the original input here 
 	mov esi, 400
 	div esi
 	cmp edx, 0
 	jne .not_leap
-	jmp .end ; ADDED
+	jmp .end ; 
 
 	.end:
 
