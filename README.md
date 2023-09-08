@@ -15,7 +15,7 @@ P.s: Yeah, I know I could use some C libs along; or Assembly libs (e.g Irvine, A
 
 ## Prerequisites (...which are what I used. You mighty use whatever you wanto thought)
 
-* Gnu/Linux ( to use the next tools )
+* Gnu/Linux ( at least that is the OS I've used here )
 * [nasm](https://www.nasm.us/)
 * ld (from [binutils](https://www.gnu.org/software/binutils/). It's already buit-in Gnu/Linux, however you can also use it in Windows by use [MinGw](https://pt.wikipedia.org/wiki/MinGW) framework or [Cygwin](https://pt.wikipedia.org/wiki/Cygwin))
 
