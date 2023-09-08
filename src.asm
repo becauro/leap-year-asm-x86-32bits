@@ -2,13 +2,13 @@ bits 64
 
 section .data
 
-	isLeap db "leap year!", 0xa, 0xd
+	isLeap db 0xA, "RESULT: It's a leap year!", 0xa, 0xa, 0xd
 	tamIsLeap EQU $-isLeap
 
-	notLeap db "not a leap year!", 0xa, 0xd
+	notLeap db 0xA, "RESULT: It's NOT a leap year!", 0xa, 0xa, 0xd
 	tamNotLeap EQU $-notLeap
 
-	message_var: db "Please, type the year: " 
+	message_var: db 0xa, "Please, type the year: "
 	tamMessage_var EQU $-message_var
 	
 section .bss
