@@ -28,7 +28,7 @@ Once inside the project folder:
 
 `ld -m elf_i386 prog.o -o prog.elf`
 
-or ... if your GNU/Linux owns the ("make")(https://www.gnu.org/software/make/) tool --- most distro does --- just type:
+or ... if your GNU/Linux owns the ["make"](https://www.gnu.org/software/make/) tool --- most distro does --- just type:
 
 `make`
 
