@@ -2,26 +2,39 @@ bits 64
 
 section .data
 
-    isLeap db "leap year!", 0xa, 0xd
-    tamIsLeap EQU $-isLeap
+	isLeap db "leap year!", 0xa, 0xd
+	tamIsLeap EQU $-isLeap
 
-    notLeap db "not a leap year!", 0xa, 0xd
-    tamNotLeap EQU $-notLeap
+	notLeap db "not a leap year!", 0xa, 0xd
+	tamNotLeap EQU $-notLeap
 
-
+	message_var: db "Please, type the year: " 
+	tamMessage_var EQU $-message_var
+	
 section .bss
 
-    year resb 4 
+	year resb 4 
 
 
 section .text
 global _start 
 
 _start:
+
+
+message:
+
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, message_var 
+	mov edx, tamMessage_var  
+	int 0x80
+	
+input:
 	mov eax, 3
 	mov ebx, 0
 	mov ecx, year
-	mov edx, 4 
+	mov edx, 4 + 1 
 	int 0x80
 
 convert:   ; convert from ASCII
