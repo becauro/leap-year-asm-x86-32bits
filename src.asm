@@ -34,7 +34,7 @@ input:
 	mov eax, 3
 	mov ebx, 0
 	mov ecx, year
-	mov edx, 4 + 1 
+	mov edx, 4 + 1 ; added 1 more byte to get NL key input: 0xa (ASCII code)
 	int 0x80
 
 convert:   ; convert from ASCII
@@ -115,7 +115,7 @@ not_leap:
 
 exit:
       
-	mov eax,	1 
+	mov eax, 1 
 	mov ebx, 0
 	int 0x80
 
