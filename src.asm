@@ -7,10 +7,9 @@ section .data
 
     notLeap db "not a leap year!", 0xa, 0xd
     tamNotLeap EQU $-notLeap
-    ;tamYear EQU 4
 
 section .bss
-    year resd 1 
+    year resb 4 
 
 section .text
 
@@ -18,67 +17,88 @@ section .text
 global _start 
 
 	_start:
-	mov rax, 0
-	mov rdi, 0
-	lea rsi, [year]
-	mov rdx, tamYear 
- 
-	syscall
+	mov eax, 3
+	mov ebx, 0
+	mov ecx, year
+	mov edx, 4 
+	int 0x80
 
-; %if 0
-	;mov eax, [year] ; ADDED
-	mov eax, rsi ; ADDED
-	xor rdx, rdx
-	xor rbx, rbx
 
-	sub rax, '0'
-	sub rbx, '0'
-	mov rbx, 4
-	div rbx
-	cmp rdx, 0
+
+convert: 
+
+xor eax, eax
+
+xor edx, edx
+sub byte [year], '0'
+mov dl, [year]
+imul dx, 1000 
+add eax, edx 
+
+xor edx, edx
+sub byte [year+1], '0'
+mov dl, [year+1]
+imul dx, 100 
+add eax, edx 
+
+xor edx, edx
+sub byte [year + 2], '0'
+mov dl, [year+2]
+imul dx, 10 
+add eax, edx 
+
+xor edx, edx
+sub byte [year + 3], '0'
+mov dl, [year+3]
+add eax, edx 
+
+jmp calc
+
+calc:
+	xor edx, edx
+	xor ebx, ebx 
+	mov ebx , 4
+	div ebx
+	cmp edx, 0
 	jne .not_leap
-	xor rbx, rbx
-	mov rbx, 100
-	div rbx
-	cmp rdx, 0
+	xor esi, esi
+	mov esi, 100
+	div esi
+	cmp edx, 0
 	je .div_400
 	jmp .end ; ADDED
-	; ret
 
 	.div_400:
-
-	mov rbx, 400
-	div rbx
-	cmp rdx, 0
+	xor esi, esi ; ADDED
+	mov esi, 400
+	div esi
+	cmp edx, 0
 	jne .not_leap
 	jmp .end ; ADDED
-	;ret
 
 	.end:
 
-	mov rax, 1
-	mov rdi, 1
-	mov rsi, isLeap
-	mov rdx, tamIsLeap
-	syscall
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, isLeap
+	mov edx, tamIsLeap
+	int 0x80
 	jmp .exit
 
 	.not_leap:
 
-	mov rax, 1
-	mov rdi, 1
-	mov rsi, notLeap
-	mov rdx, tamNotLeap
-	syscall
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, notLeap
+	mov edx, tamNotLeap
+	int 0x80
 
-;%if 0
        .exit:
       
-              mov rax, 0x3c
-              mov rdi, 0
-              syscall
+              mov eax,	1 
+              mov ebx, 0
+              int 0x80
 
-;%endif
 
 
 
