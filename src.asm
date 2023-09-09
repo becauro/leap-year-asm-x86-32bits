@@ -71,6 +71,12 @@ calc:
 	xor ebx, ebx 
 
 	mov ecx, eax ; copy the original input year to use later
+
+
+	cmp eax, 1582 ; Leap year must be greater than 1582
+    	jle not_leap
+
+
 	mov ebx , 4	; check if the year is divisible by 4
 	div ebx
 	cmp edx, 0
