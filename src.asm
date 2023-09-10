@@ -72,10 +72,8 @@ calc:
 
 	mov ecx, eax ; copy the original input year to use later
 
-
 	cmp eax, 1582 ; Leap year must be greater than 1582
     	jle not_leap
-
 
 	mov ebx , 4	; check if the year is divisible by 4
 	div ebx
@@ -84,13 +82,17 @@ calc:
 	xor esi, esi
 	xor eax, eax
 	mov eax, ecx   	; get back the original input here 
+
+	.test_divisible_by_100:
+	
 	mov esi, 100	; It check if it's an end-of-century year (first part)
 	div esi
 	cmp edx, 0
-	je .div_400    ; End-of-century year is leap only it's divisible by 400 
+	je .test_divisible_By_400    ; End-of-century year is leap only it's divisible by 400 
 	jmp is_leap    ; if it's is not end-of-century so It's a leap 
 
-	.div_400:
+	.test_divisible_By_400:
+
 	xor esi, esi  
 	xor eax, eax
 	mov eax, ecx 	; get back the original input here 
