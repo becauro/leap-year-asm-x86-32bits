@@ -77,7 +77,7 @@ calc:
 
 	mov ebx , 4	; check if the year is divisible by 4
 	div ebx
-	cmp edx, 0
+	cmp edx, 0	; maybe this instruction is redundant once ZF bit of the EFLAGS would be enouth here.
 	jne not_leap    ; if it's not divisible by 4 that is not a leap year
 	xor esi, esi
 	xor eax, eax
@@ -87,7 +87,7 @@ calc:
 	
 	mov esi, 100	; It check if it's an end-of-century year (first part)
 	div esi
-	cmp edx, 0
+	cmp edx, 0	; maybe this instruction is redundant once ZF bit of the EFLAGS would be enouth here.
 	je .test_divisible_By_400    ; End-of-century year is leap only it's divisible by 400 
 	jmp is_leap    ; if it's is not end-of-century so It's a leap 
 
@@ -97,8 +97,8 @@ calc:
 	xor eax, eax
 	mov eax, ecx 	; get back the original input here 
 	mov esi, 400
-	div esi 
-	cmp edx, 0   ; check if the end-of-century year is divisible by 400
+	div esi 	
+	cmp edx, 0  	 ; maybe this instruction is redundant once ZF bit of the EFLAGS would be enouth here.
 	jne not_leap ; if It's not divisible by 400 It's not a leap
 	jmp is_leap ; if It's divisible by 400 It's a leap end-of-century year 
 
